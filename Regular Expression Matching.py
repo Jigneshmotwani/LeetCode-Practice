@@ -1,17 +1,24 @@
 class Solution(object):
     def isMatch(self, s, p):
-        s_list = list(s)
-        p_list = list(p)
-        i = 0
-        j = 0
-        if len(s) > len(p):
+
+        memo = {}
+
+        def dfs(i, j):
+            if (i, j) in memo:
+                return memo[(i,j)]
+            if i >= len(s) and j >= len(p):
+                return True
+            if j >= len(p):
+                return False
+            
+            match = i<len(s) and (s[i] == p[j] or p[j] == ".")
+            if j + 1< len(p) and p[j+1] == "*":
+                memo[(i, j)] = dfs(i,j+2) or (match and dfs(i+1, j))
+                return memo[(i, j)]
+            if match:
+                memo[(i, j)] = dfs(i+1,j+1)
+                return memo[(i, j)]
+
             return False
-        while i != len(s):
-            if p_list[j] == s_list[i]:
-                i += 1
-                j += 1
-            elif p_list[j] == ".":
-                i += 1
-                j += 1
-            elif p_list[j] == "*":
-                
+
+        return dfs(0,0)
