@@ -10,7 +10,7 @@ class Solution(object):
         n = len(nums2)
         i = 0
         j = 0
-        for i in range(m+n):
+        for k in range(m+n):
             if (i>=m and j>=n):
                 break
             if (i>=m):
@@ -27,6 +27,7 @@ class Solution(object):
                 nums.append(nums2[j])
                 j += 1
         s = len(nums)
+
         if(s%2==0):
             return (nums[s//2]+nums[s//2-1])/2
         else:
