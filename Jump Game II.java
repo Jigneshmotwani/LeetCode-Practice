@@ -1,5 +1,5 @@
 class Solution {
-    public int jump(int[] nums) {
+    public boolean jump(int[] nums) {
 
     }
     
