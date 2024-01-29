@@ -1,28 +1,43 @@
 class Solution {
     public String convert(String s, int numRows) {
-        if(numRows == 1){
+        if (numRows == 1) {
             return s;
         }
-        String result = "";
-        for(int i =0; i<numRows;i++){
-            int j = 0;
-            boolean flag = true;
-            while (flag){
-                int a = (int) (Math.pow(numRows-1, j) + i);
-                if(a<0 || a>=s.length()){
-                    flag = false;
-                    break;
+        if (numRows >= s.length()) {
+            return s;
+        }
+        int numCols = (s.length() - 1 / 2) + 1;
+        char[][] store = new char[numRows][numCols];
+        int i = 0;
+        int k = 0;
+        while (i < s.length()) {
+            for (int j = 0; j < numCols / numRows; j++) {
+                for (int k1 = 0; k1 < numRows; k1++) {
+                    if (i >= s.length()) {
+                        break;
+                    }
+                    store[k1][k] = s.charAt(i);
+                    i++;
                 }
-                result += s.charAt(a);
-                int b = (int) (Math.pow(numRows-1, j+1) - i);
-                if(b<0 || b>=s.length()){
-                    flag = false;
-                    break;
+                k++;
+                for (int k2 = numRows - 2; k2 > 0; k2--) {
+                    if (i >= s.length()) {
+                        break;
+                    }
+                    store[k2][k] = s.charAt(i);
+                    i++;
+                    k++;
                 }
-                result += s.charAt(b);
-                j++;
             }
         }
-        return result;
+        StringBuilder sb = new StringBuilder();
+        for (int a = 0; a < store.length; a++) {
+            for (int b = 0; b < store[0].length; b++) {
+                if (store[a][b] != '\u0000') {
+                    sb.append(store[a][b]);
+                }
+            }
+        }
+        return sb.toString();
     }
 }
